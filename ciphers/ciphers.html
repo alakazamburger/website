@@ -6,11 +6,27 @@
     </head>
 
     <body>
-        <p>Input:</p>
-        <textarea id="inptext" placeholder="Put some text in here..."></textarea>
+        <h1>Welcome to the best page on the site.</h1>
 
-        <p>Output:</p>
-        <div id="output"></div>
+        <p>
+            In a nutshell, this will convert to and from as many ciphers as I can be bothered to add.<br>
+            Normal text goes into the "Plaintext" text field.<br>
+            Enjoy!
+        </p>
+
+        <p>Plaintext:</p>
+        <textarea id="plaintextbox" placeholder="Put normal text in here..."></textarea>
+
+        <p>ROT13:</p>
+        <!--
+        <textarea id="rot13box" placeholder="Put ROT13 text in here..."></textarea>
+        -->
+        <div id="rot13box"></div>
+
+        <p>Atbash:</p>
+        <div id="atbashbox"></div>
+
+        <a href="../index.html">Home</a>
 
         <script src="cipherscript.js"></script>
     </body>

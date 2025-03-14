@@ -5,6 +5,7 @@ var plain = ''
 const rot13div = document.getElementById("rot13box")
 const atbashdiv = document.getElementById("atbashbox")
 const morsediv = document.getElementById("morsebox")
+const base64div = document.getElementById("base64box")
 
 // every time the plaintext box changes, this detects it
 plainbox.addEventListener('input', function (event) {
@@ -13,6 +14,7 @@ plainbox.addEventListener('input', function (event) {
     rot13div.innerHTML = toRot13(plain)
     atbashdiv.innerHTML = toAtbash(plain)
     morsediv.innerHTML = toMorse(plain)
+    base64div.innerHTML = toBase64(plain)
 })
 
 /*
@@ -42,7 +44,7 @@ function toRot13(text) {
         // check for space
         if (cc == 32) {
         	out = out + ' '
-          continue
+                        continue
         }
 
         // get rid of non-alphanumeric characters
@@ -90,12 +92,16 @@ function toAtbash(text) {
 }
 
 function toMorse(text) {
-    const morse = [
+    const morseLetters = [
         '.-', '-...', '-.-.', '-..', '.', '..-.', // A-F
         '--.', '....', '..', '.---', '-.-', '.-..', // G-L
         '--', '-.', '---', '.--.', '--.-', '.-.', // M-R
         '...', '-', '..-', '...-', // S-V
-        '.--', '-..-', '-.--', '--..' // W-Z
+        '.--', '-..-', '-.--', '--..', // W-Z
+    ]
+    const morseNumbers = [
+    	'-----', '.----', '..---', '...--', '....-', // 0-4
+        '.....', '-....', '--...', '---..', '----.' // 5-9
     ]
     outArr = []
     for (i = 0; i < text.length; i++) {
@@ -107,8 +113,15 @@ function toMorse(text) {
             outArr.push('/')
             continue
         }
+        
+        // account for numbers
+        if (cc >= 48 && cc <= 57) {
+        	var place = cc-48
+            outArr.push(morseNumbers[place])
+            continue
+        }
 
-        // no non-letters allowed (so far)
+        // no other symbols allowed (so far)
         if (isInAlphabet(cc) == false) continue
         
         // turn the letter into a 1-26 value
@@ -119,8 +132,12 @@ function toMorse(text) {
             place = cc-96
         }
 
-        outArr.push(morse[place-1])
+        outArr.push(morseLetters[place-1])
     }
     out = outArr.join(' ')
     return out
+}
+
+function toBase64(text) {
+	return btoa(text)
 }

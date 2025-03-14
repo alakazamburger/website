@@ -74,8 +74,6 @@ function toAtbash(text) {
         // get rid of non-alphanumeric characters
         if (isInAlphabet(cc) == false) continue
         
-        console.log(cc)
-        
         // now apply the atbash
         if (cc >= 65 && cc <= 90) { // uppercase
             var place = cc-64 // A=1, Z=26

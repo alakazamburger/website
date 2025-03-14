@@ -4,6 +4,7 @@ var plain = ''
 // var rot13 = ''
 const rot13div = document.getElementById("rot13box")
 const atbashdiv = document.getElementById("atbashbox")
+const morsediv = document.getElementById("morsebox")
 
 // every time the plaintext box changes, this detects it
 plainbox.addEventListener('input', function (event) {
@@ -11,6 +12,7 @@ plainbox.addEventListener('input', function (event) {
     // rot13box.innerHTML = toRot13(plain)
     rot13div.innerHTML = toRot13(plain)
     atbashdiv.innerHTML = toAtbash(plain)
+    morsediv.innerHTML = toMorse(plain)
 })
 
 /*
@@ -20,6 +22,16 @@ rot13box.addEventListener('input', function (event) {
     plainbox.innerHTML = toRot13(rot13)
 })
 */
+
+////////////////////////////////////// USEFUL FUNCTIONS ///////////////////////////////////////
+
+// this receives the char code and checks if it's in the alphabet or not
+function isInAlphabet(l) {
+    if ((l < 65 || (l > 90 && l < 97) || l > 122)) {return false} else return true
+    // check for (before A) OR (between Z and a) OR (after z)
+}
+
+/////////////////////////////////////////// CIPHERS ///////////////////////////////////////////
 
 function toRot13(text) {
     var out = ''
@@ -79,8 +91,38 @@ function toAtbash(text) {
     return out
 }
 
-// this receives the char code and checks if it's in the alphabet or not (IGNORING SPACE)
-function isInAlphabet(l) {
-    if ((l < 65 || (l > 90 && l < 97) || l > 122)) {return false} else return true
-    // check for (before A) OR (between Z and a) OR (after z)
+function toMorse(text) {
+    const morse = [
+        '.-', '-...', '-.-.', '-..', '.', '..-.', // A-F
+        '--.', '....', '..', '.---', '-.-', '.-..', // G-L
+        '--', '-.', '---', '.--.', '--.-', '.-.', // M-R
+        '...', '-', '..-', '...-', // S-V
+        '.--', '-..-', '-.--', '--..' // W-Z
+    ]
+    outArr = []
+    for (i = 0; i < text.length; i++) {
+        // char code
+        var cc = text.charCodeAt(i)
+
+        // account for space
+        if (cc == 32) {
+            outArr.push('/')
+            continue
+        }
+
+        // no non-letters allowed (so far)
+        if (isInAlphabet(cc) == false) continue
+        
+        // turn the letter into a 1-26 value
+        var place = 0
+        if (cc >= 65 && cc <= 90) { // uppercase
+            place = cc-64
+        } else { // lowercase
+            place = cc-96
+        }
+
+        outArr.push(morse[place-1])
+    }
+    out = outArr.join(' ')
+    return out
 }

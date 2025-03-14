@@ -6,7 +6,8 @@ body {
 .homebanner {
     border: 5px solid rgb(0, 0, 0);
     border-radius: 20px;
-    height: 300px;
+    height: 100px;
+    width: 95%;
     display: block;
     margin: auto;
 }

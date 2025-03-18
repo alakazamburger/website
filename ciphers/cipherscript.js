@@ -44,11 +44,14 @@ function toRot13(text) {
         // check for space
         if (cc == 32) {
         	out = out + ' '
-                        continue
+          continue
         }
 
         // get rid of non-alphanumeric characters
-        if (isInAlphabet(cc) == false) continue
+        if (isInAlphabet(cc) == false) {
+        		out = out + String.fromCharCode(cc)
+            continue
+        }
 
         // now apply the rot13
         if (cc <= 77 || (cc <= 109 && cc >= 97)) { // if (<= M) OR (<= m AND >= a); in other words, on the left half of the alphabet
@@ -69,12 +72,15 @@ function toAtbash(text) {
 
         // check for space
         if (cc == 32) {
-        	out = out + ' '
-          continue
+            out = out + ' '
+            continue
         }
 
         // get rid of non-alphanumeric characters
-        if (isInAlphabet(cc) == false) continue
+        if (isInAlphabet(cc) == false) {
+        		out = out + String.fromCharCode(cc)
+            continue
+        }
         
         // now apply the atbash
         if (cc >= 65 && cc <= 90) { // uppercase
@@ -116,7 +122,7 @@ function toMorse(text) {
         
         // account for numbers
         if (cc >= 48 && cc <= 57) {
-        	var place = cc-48
+        		var place = cc-48
             outArr.push(morseNumbers[place])
             continue
         }
